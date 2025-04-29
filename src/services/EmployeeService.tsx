@@ -32,7 +32,6 @@ export const addEmployee = async (employee: Employee): Promise<Employee> => {
   return await response.json();
 };
 
-
 export const editEmployee = async (employee: Employee): Promise<Employee> => {
   const response = await fetch(`${API_BASE_URL}/UpdateEmployee`, {
     method: 'POST',
@@ -63,6 +62,22 @@ export const delteEmployee = async (id: number): Promise<Employee> => {
 
   return await response.json();
 };
+
+export const getEmployee = async (id: number): Promise<Employee> => {
+  const response = await fetch(`${API_BASE_URL}/GetEmployee/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to delete employee');
+  }
+
+  return await response.json();
+};
+
 
 
 

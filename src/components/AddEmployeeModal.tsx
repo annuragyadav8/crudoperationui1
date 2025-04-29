@@ -35,7 +35,6 @@ const AddEmployeeModal: FC<Props> = ({ onClose, onAddSuccess, employee, addOrEdi
       console.error('Error adding employee:', error);
     }
   };
-  
 
   return (
     <div className="modal">

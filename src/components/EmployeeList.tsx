@@ -1,5 +1,5 @@
 import React, { useEffect, useState, FunctionComponent  } from 'react';
-import { getEmployees ,delteEmployee} from '../services/EmployeeService';
+import { getEmployees ,delteEmployee, getEmployee} from '../services/EmployeeService';
 import { Employee } from '../models/Employee';
 import AddEmployeeModal from './AddEmployeeModal';
 import './EmployeeList.css';
@@ -23,20 +23,24 @@ const EmployeeList : FunctionComponent = () => {
     }
   };
 
-  
-  const handleEdit = (id?: number) => {
+  const handleEdit = async (id?: number) => {
     setAddOrEdit(false);
+    if (id !== undefined) 
+    {
+      const data: Employee = await getEmployee(id);
+      console.log("data ==>",data);
+      setEmployee(data);
     setShowModal(true);
-    setEmployee(employees.find(x => x.id == id));
-    <AddEmployeeModal
-          onClose={() => setShowModal(false)}
-          onAddSuccess={fetchEmployees}
-          employee={employee}
-          addOrEdit={addOrEdit}
-        />
+       <AddEmployeeModal
+             onClose={() => setShowModal(false)}
+             onAddSuccess={fetchEmployees}
+             employee={data}
+             addOrEdit={addOrEdit}
+           />
+    }
+  
   };
   
-
   const handleDelete = (id?: number) => {
     if (id !== undefined) {
       delteEmployee(id);
@@ -50,8 +54,6 @@ const EmployeeList : FunctionComponent = () => {
     setAddOrEdit(true);
     setShowModal(true);
   };
-
-
 
   return (
     <div className="table-container">
